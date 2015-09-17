@@ -1,0 +1,53 @@
+/******************************************************************************
+
+  Copyright (C), 2001-2013, Unknown Tech. Co., Ltd.
+
+ ******************************************************************************
+  File Name     : elf_io.h
+  Version       : Initial Draft
+  Author        : Justin Liu
+  Created       : 2015/9/11
+  Last Modified :
+  Description   : Get ELF file info from other process
+  Function List :
+  History       :
+  1.Date        : 2015/9/11
+    Author      : Justin Liu
+    Modification: Created file
+
+******************************************************************************/
+#ifndef _ELF_IO
+#define _ELF_IO
+#include <link.h>
+#include "proc_trace.h"
+
+typedef struct elf_info_t {
+    //ELF head info
+    ElfW(Addr) base;
+
+    ElfW(Addr) phdr_addr;
+    ElfW(Addr) dyn_addr;
+    ElfW(Xword) dyn_memsz;
+
+
+
+} elf_info;
+
+typedef struct dynamic_info_t {
+    //dynamic table info
+    ElfW(Addr) symtab;
+    ElfW(Addr) strtab;
+    long    symsize;
+    ElfW(Addr) reldyn;
+    long    reldynsz;
+    ElfW(Addr) relplt;
+    long    relpltsz;
+    ElfW(Addr) rela;
+    long    relasz;
+} dynamic_info;
+
+
+extern struct link_map * get_linkmap(pid_t pid, elf_info *elfinfo);
+extern ElfW(Addr) find_symbol(pid_t pid,struct link_map *lm, const char *
+                              sym_name);
+#endif
