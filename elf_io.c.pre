@@ -141,7 +141,7 @@ ElfW(Addr) find_symbol(pid_t pid,struct link_map *lm, const char * sym_name)
     struct link_map map = {0};
     dynamic_info dyninfo = {0};
     char *name = NULL;
-//    ElfW(Addr) addr = 0;
+    ElfW(Addr) addr = 0;
     int i = 0;
 
 
@@ -173,12 +173,11 @@ ElfW(Addr) find_symbol(pid_t pid,struct link_map *lm, const char * sym_name)
 
     }*/
 
-    for (i=0; i<dyninfo.symsize; i++) {
+    for (i=0;i<dyninfo.symsize;i++){
         ptrace_read(pid, dyninfo.symtab + i * sizeof(ElfW(Sym)), &sym,
-                    sizeof(ElfW(Sym)));
+            sizeof(ElfW(Sym)));
 
-        if (ELFW(ST_TYPE)(sym.st_info) != STT_FUNC) {
-            printf("type: %d size:%d value:%d\n", (int)ELFW(ST_TYPE)(sym.st_info), (int)sym.st_size, (int)sym.st_value);
+        if (ELFW(ST_TYPE)(sym.st_info) != STT_FUNC){
             continue;
         }
 

@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     printf("begin to attach pid:%d\n", pid);
 
     ptrace_attach(pid, &regs);
-    
+
     lm = get_linkmap(pid, &elfinfo);
 
     if (NULL == lm)
