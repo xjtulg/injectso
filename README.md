@@ -1,8 +1,8 @@
 # InjectSO - ELF Symbol Resolution & Process Injection Toolkit 🚀
 
-一个用于学习和研究ELF文件注入、进程追踪和符号解析的C语言工具包。这个项目演示了使用ptrace系统调用进行底层进程操作。
+A C-based toolkit for learning and researching ELF file injection, process tracing, and symbol resolution. This project demonstrates low-level process manipulation using ptrace system calls.
 
-> ⚠️ **仅用于教育和研究目的** - 请勿用于恶意软件开发或非法活动
+> ⚠️ **For educational and research purposes only** - Do not use for malicious software development or illegal activities
 
 ## Overview
 
@@ -14,17 +14,17 @@ InjectSO is a C-based educational tool that allows you to:
 - Read and write memory in target process address space
 - Demonstrate comprehensive symbol resolution capabilities
 
-## ✨ 特性
+## Features
 
-- **🔍 ELF文件解析** - 完整解析ELF头部、程序头和动态段
-- **📚 符号表解析** - 解析动态符号表和字符串表，支持多种符号类型
-- **🔗 共享库扫描** - 自动发现进程加载的所有共享库
-- **⚡ 进程注入** - 安全的ptrace操作，附加到目标进程
-- **🎯 多目标搜索** - 支持同时搜索多个函数符号
-- **📊 详细报告** - 生成详细的内存布局和符号信息报告
-- **🛡️ 错误处理** - 优雅的错误处理，不会崩溃或挂起
-- **🎨 用户友好** - 清晰的输出和丰富的表情符号
-- **🏗️ 现代构建** - 完整的Makefile构建系统，支持debug/release模式
+- **🔍 ELF File Parsing** - Complete parsing of ELF headers, program headers, and dynamic segments
+- **📚 Symbol Table Parsing** - Parse dynamic symbol tables and string tables, supporting multiple symbol types
+- **🔗 Shared Library Scanning** - Automatically discover all shared libraries loaded by a process
+- **⚡ Process Injection** - Safe ptrace operations to attach to target processes
+- **🎯 Multi-Target Search** - Support for searching multiple function symbols simultaneously
+- **📊 Detailed Reporting** - Generate detailed memory layout and symbol information reports
+- **🛡️ Error Handling** - Graceful error handling without crashes or hangs
+- **🎨 User-Friendly** - Clear output with rich emoji indicators
+- **🏗️ Modern Build** - Complete Makefile build system with debug/release modes
 
 ## Building
 
@@ -37,44 +37,44 @@ InjectSO is a C-based educational tool that allows you to:
 ### Quick Build
 
 ```bash
-# 构建所有组件（injector + example program）
+# Build all components (injector + example program)
 make all
 
-# 或者简单运行（all是默认目标）
+# Or simply run (all is the default target)
 make
 ```
 
-### 构建选项
+### Build Options
 
 ```bash
-# 运行完整演示
+# Run complete demonstration
 make demo
 
-# Debug构建（包含调试符号）
+# Debug build (with debug symbols)
 make debug
 
-# Release构建（优化版本）
+# Release build (optimized version)
 make release
 
-# 清理构建文件
+# Clean build files
 make clean
 
-# 查看项目信息
+# Show project information
 make info
 
-# 查看所有可用命令
+# Show all available commands
 make help
 ```
 
-### 构建目标说明
+### Build Target Descriptions
 
-- **`make all`** - 构建主程序和示例程序（默认）
-- **`make example`** - 仅构建示例程序
-- **`make debug`** - Debug构建，包含调试信息和额外输出
-- **`make release`** - 优化构建，去除调试信息
-- **`make demo`** - 自动运行完整演示流程
-- **`make clean`** - 清理所有构建产物
-- **`make info`** - 显示项目构建信息
+- **`make all`** - Build main program and example program (default)
+- **`make example`** - Build only the example program
+- **`make debug`** - Debug build with debug information and extra output
+- **`make release`** - Optimized build with debug info stripped
+- **`make demo`** - Automatically run complete demonstration workflow
+- **`make clean`** - Clean all build artifacts
+- **`make info`** - Display project build information
 
 ### Manual Build
 
@@ -171,9 +171,9 @@ cd example && make run && cd ..
    - Validate addresses and report findings
 7. Restore process state and detach cleanly
 
-## 📊 输出示例
+## 📊 Sample Output
 
-### 完整分析输出
+### Complete Analysis Output
 ```
 🚀 ELF Symbol Resolution Tool
 ============================
@@ -208,7 +208,7 @@ Found 2 shared libraries
    • Function addresses and metadata
 ```
 
-### 符号发现输出
+### Symbol Discovery Output
 ```
 addr of symtab: 0x7ffff7dd5f40 (raw d_ptr=0x1e5f40, base=0x55e8a5ac000)
 addr of strtab: 0x7ffff7e06a60 (raw d_ptr=0x206a60, base=0x55e8a5ac000)
