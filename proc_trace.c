@@ -134,7 +134,14 @@ void ptrace_read(pid_t pid, unsigned long addr, void *vptr, int len)
 
 
     while (count < len) {
+        errno = 0;
         word = ptrace(PTRACE_PEEKTEXT, pid, addr + count, NULL);
+        if (errno != 0) {
+            printf("ptrace_read failed at address 0x%lx: %s\n", addr + count, strerror(errno));
+            // Fill remaining buffer with zeros on error
+            memset(vptr + count, 0, len - count);
+            return;
+        }
         count += sizeof(word);
         ptr[i++] = word;
     }
@@ -154,7 +161,7 @@ char * ptrace_readstr(pid_t pid, unsigned long addr)
     while(i <= 1000) {
         word = ptrace(PTRACE_PEEKTEXT, pid, addr + count, NULL);
         count += sizeof(word);
-        for (j=0; j<sizeof(word); j++) {
+        for (j=0; j<(int)sizeof(word); j++) {
             if (pa[j] == '\0') {
                 str[i] = '\0';
                 return str;

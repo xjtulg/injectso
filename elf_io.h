@@ -55,4 +55,5 @@ typedef struct dynamic_info_t {
 extern struct link_map * get_linkmap(pid_t pid, elf_info *elfinfo);
 extern ElfW(Addr) find_symbol(pid_t pid,struct link_map *lm, const char *
                               sym_name);
+extern int find_shared_libraries(pid_t pid, struct link_map **libs, int max_libs);
 #endif

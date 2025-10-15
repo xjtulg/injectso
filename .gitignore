@@ -1,0 +1,54 @@
+# Object files
+*.o
+*.obj
+
+# Executables
+injector
+*.exe
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Build artifacts
+*.a
+*.so
+*.dylib
+*.dll
+
+# Core dumps
+core
+core.*
+
+# Editor backups and temp files
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+.cproject/
+.project/
+
+# Log files
+*.log
+
+# GDB history
+.gdb_history
+
+# Valgrind output
+valgrind*.log
+
+# Test output files
+test_output/
+coverage/
+
+# Temporary directories
+tmp/
+temp/
