@@ -19,12 +19,12 @@ void signal_handler(int sig) {
 
 __attribute__((used)) __attribute__((noinline))
 void demo_function_target(void) {
-    puts("✅ Found demo_function_target - this is the target function!");
+    puts("[OK] Found demo_function_target - this is the target function!");
 }
 
 __attribute__((used)) __attribute__((noinline))
 void symbol_lookup_demo(const char* func_name) {
-    printf("🎯 Symbol lookup demo: %s was found!\n", func_name);
+    printf("[->] Symbol lookup demo: %s was found!\n", func_name);
 }
 
 __attribute__((used)) __attribute__((noinline))
@@ -36,7 +36,7 @@ __attribute__((used)) __attribute__((noinline))
 void* demo_memory_function(size_t size) {
     void* ptr = malloc(size);
     if (ptr) {
-        printf("📝 Allocated %zu bytes at %p\n", size, ptr);
+        printf("[*] Allocated %zu bytes at %p\n", size, ptr);
     }
     return ptr;
 }
@@ -44,7 +44,7 @@ void* demo_memory_function(size_t size) {
 // Explicit puts function to ensure it's in symbol table
 __attribute__((used)) __attribute__((noinline))
 void explicit_puts_call(void) {
-    puts("📢 This is an explicit puts() call for symbol lookup");
+    puts("[*] This is an explicit puts() call for symbol lookup");
 }
 
 // Test functions that can be found by the injector
@@ -178,14 +178,14 @@ int main(void) {
     time_test_function();
 
     // Call demonstration functions
-    printf("\n🎯 Calling demonstration functions for injector:\n");
+    printf("\n[->] Calling demonstration functions for injector:\n");
     demo_function_target();
     symbol_lookup_demo("demo_function_target");
     explicit_puts_call();
     void* test_ptr = demo_memory_function(128);
     if (test_ptr) free(test_ptr);
     int result = demo_math_function(10, 20);
-    printf("🧮 Math test result: %d\n", result);
+    printf("[*] Math test result: %d\n", result);
 
     printf("\nStarting main loop...\n");
 

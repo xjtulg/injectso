@@ -14,7 +14,7 @@ The codebase is organized into several modules:
 - **injector.c/main()**: Entry point that orchestrates the injection process
   - Attaches to target process via PID
   - Retrieves link_map structure
-  - Searches for symbols (currently hardcoded to find "puts")
+  - Searches for symbols (puts, printf, malloc by default)
   - Detaches cleanly
 
 - **proc_trace.c**: Low-level ptrace operations wrapper
@@ -38,10 +38,15 @@ The codebase is organized into several modules:
 
 ## Build System
 
-No formal build system exists. Compile manually with gcc:
+Uses a Makefile with multiple targets:
 
 ```bash
-gcc -o injector injector.c elf_io.c proc_trace.c
+make            # Build injector and example program
+make debug      # Build with debug symbols
+make release    # Optimized release build
+make clean      # Remove build artifacts
+make demo       # Build and run a demonstration
+make help       # Show all available targets
 ```
 
 **Note**: Build tools (gcc, make) are not installed in the current environment. Install build-essential package first.
@@ -66,8 +71,8 @@ Example:
 2. Wait for process to stop (`WUNTRACED`)
 3. Extract ELF base from `/proc/pid/maps`
 4. Parse ELF headers to find dynamic section
-5. Locate link_map through GOT entry
-6. Recursively walk link_map chain to find symbols
+5. Locate link_map through DT_DEBUG -> r_debug -> r_map (with GOT[1] fallback)
+6. Iteratively walk link_map chain to find symbols
 7. Restore registers and detach
 
 ### Symbol Resolution
@@ -86,5 +91,5 @@ Example:
 - Code includes extensive debug output showing symbol addresses and table locations
 - Error handling is basic but functional
 - Memory allocation needs verification (malloc without null checks in some places)
-- The symbol search is recursive across all loaded libraries
-- Currently hardcoded to search for "puts" symbol as demonstration
+- The symbol search is iterative across all loaded libraries (via link_map chain)
+- Searches for puts, printf, malloc as demonstration targets

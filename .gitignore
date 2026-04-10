@@ -4,6 +4,7 @@
 
 # Executables
 injector
+example/test_program
 *.exe
 
 # Debug files

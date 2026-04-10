@@ -84,16 +84,16 @@ void ptrace_attach(pid_t pid, struct user_regs_struct *oldregs)
 
 void ptrace_cont(pid_t pid)
 {
-    int stat;
+    int stat = 0;
 
     if(ptrace(PTRACE_CONT, pid, NULL, NULL) < 0) {
         perror("ptrace_cont");
         exit(-1);
     }
 
-    while(!WIFSTOPPED(stat)) {
-        waitpid(pid, &stat, WNOHANG);
-    }
+    do {
+        waitpid(pid, &stat, 0);
+    } while(!WIFSTOPPED(stat));
 }
 
 
@@ -159,7 +159,12 @@ char * ptrace_readstr(pid_t pid, unsigned long addr)
     pa = (char *)&word;
 
     while(i <= 1000) {
+        errno = 0;
         word = ptrace(PTRACE_PEEKTEXT, pid, addr + count, NULL);
+        if (errno != 0) {
+            str[i] = '\0';
+            return str;
+        }
         count += sizeof(word);
         for (j=0; j<(int)sizeof(word); j++) {
             if (pa[j] == '\0') {
@@ -191,9 +196,9 @@ void ptrace_call(pid_t pid, unsigned long addr)
 
     ptrace_cont(pid);
 
-    while(!WIFSIGNALED(stat)) {
-        waitpid(pid, &stat, WNOHANG);
-    }
+    do {
+        waitpid(pid, &stat, 0);
+    } while(!WIFSIGNALED(stat));
 }
 
 
